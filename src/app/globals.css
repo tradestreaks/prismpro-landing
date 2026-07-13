@@ -1,0 +1,230 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-sans: "Inter";
+  --font-serif: "Newsreader";
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    @apply bg-canvas text-ink font-sans antialiased;
+    background-color: #0c0e12;
+    overflow-x: hidden;
+  }
+
+  /* Offset anchor targets so the fixed nav doesn't cover section tops */
+  section[id],
+  [id="join"] {
+    scroll-margin-top: 88px;
+  }
+
+  ::selection {
+    background: rgba(201, 123, 87, 0.28);
+    color: #f5f1e8;
+  }
+
+  /* Thin, on-brand scrollbar */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(245, 241, 232, 0.14) transparent;
+  }
+  *::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  *::-webkit-scrollbar-thumb {
+    background: rgba(245, 241, 232, 0.14);
+    border-radius: 999px;
+  }
+}
+
+@layer components {
+  /* Frosted glass surface — used across nav, cards, chips */
+  .glass {
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.06),
+      rgba(255, 255, 255, 0.02)
+    );
+    backdrop-filter: blur(18px) saturate(140%);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+    border: 1px solid rgba(245, 241, 232, 0.09);
+  }
+
+  .glass-strong {
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.09),
+      rgba(255, 255, 255, 0.03)
+    );
+    backdrop-filter: blur(28px) saturate(150%);
+    -webkit-backdrop-filter: blur(28px) saturate(150%);
+    border: 1px solid rgba(245, 241, 232, 0.11);
+  }
+
+  /* Spectrum gradient text — coral → tan → lavender → sage → slate */
+  .text-spectrum {
+    background: linear-gradient(
+      100deg,
+      #dc9a7e 0%,
+      #e3c3a4 26%,
+      #b8b1c2 52%,
+      #9caea1 76%,
+      #808d9b 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .text-warm {
+    background: linear-gradient(180deg, #f5f1e8 0%, #cdb9a6 130%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Hairline top-lit border for cards */
+  .ring-hairline {
+    box-shadow: inset 0 1px 0 0 rgba(245, 241, 232, 0.06),
+      inset 0 0 0 1px rgba(245, 241, 232, 0.05);
+  }
+
+  .btn-primary {
+    @apply relative inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-[15px] font-medium text-canvas transition-all duration-300;
+    background: linear-gradient(180deg, #e0956f 0%, #c97b57 100%);
+    box-shadow: 0 10px 30px -10px rgba(201, 123, 87, 0.6),
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.25);
+  }
+  .btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 16px 40px -12px rgba(201, 123, 87, 0.7),
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.3);
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-[15px] font-medium text-ink transition-all duration-300;
+    background: rgba(245, 241, 232, 0.04);
+    border: 1px solid rgba(245, 241, 232, 0.12);
+  }
+  .btn-ghost:hover {
+    background: rgba(245, 241, 232, 0.08);
+    border-color: rgba(245, 241, 232, 0.2);
+  }
+
+  .prose-prism h2 {
+    @apply mt-8 text-[20px] font-semibold text-ink;
+  }
+  .prose-prism p,
+  .prose-prism li {
+    @apply text-[15px] leading-relaxed text-ink-soft;
+  }
+  .prose-prism ul {
+    @apply list-disc space-y-2 pl-5;
+  }
+  .prose-prism a {
+    @apply text-prism-glow underline underline-offset-2;
+  }
+
+  .eyebrow {
+    @apply inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-[12px] font-medium uppercase tracking-[0.18em] text-ink-soft;
+    background: rgba(245, 241, 232, 0.04);
+    border: 1px solid rgba(245, 241, 232, 0.09);
+  }
+}
+
+@layer utilities {
+  .container-prism {
+    @apply mx-auto w-full max-w-[1200px] px-6 sm:px-8;
+  }
+
+  .grain {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  }
+
+  .mask-fade-b {
+    -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+    mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+  }
+  .mask-fade-x {
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent,
+      black 12%,
+      black 88%,
+      transparent
+    );
+    mask-image: linear-gradient(
+      to right,
+      transparent,
+      black 12%,
+      black 88%,
+      transparent
+    );
+  }
+}
+
+/* Refraction bloom — the app's comparison loader (radial sunburst spokes,
+   masked to a ring, slowly rotating). Mirrors the reference exactly. */
+.refraction-bloom {
+  background: repeating-conic-gradient(
+    from 0deg,
+    rgba(184, 177, 194, 0.6) 0deg 0.6deg,
+    transparent 0.6deg 7.5deg
+  );
+  -webkit-mask: radial-gradient(
+    circle,
+    transparent 17px,
+    #000 19px,
+    #000 60px,
+    transparent 65px
+  );
+  mask: radial-gradient(
+    circle,
+    transparent 17px,
+    #000 19px,
+    #000 60px,
+    transparent 65px
+  );
+  animation: plSpin 26s linear infinite, plPulse 3.4s ease-in-out infinite;
+}
+.refraction-spin {
+  animation: plSpin 26s linear infinite;
+  transform-origin: center;
+}
+.refraction-core {
+  animation: plPulse 3.4s ease-in-out infinite;
+}
+@keyframes plSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes plPulse {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
