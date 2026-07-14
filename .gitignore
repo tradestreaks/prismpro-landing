@@ -41,3 +41,6 @@ public/enso-cream-sm.png
 # temp analysis captures (video frames, montages, previews)
 reference/_*.png
 reference/grid*.png
+
+# raw screenshot originals (cropped copies live in public/shots/)
+public/shots/incoming/

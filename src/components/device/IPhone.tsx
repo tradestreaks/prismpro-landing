@@ -10,10 +10,14 @@ export default function IPhone({
   children,
   className = "",
   glow = true,
+  island = true,
 }: {
   children: ReactNode;
   className?: string;
   glow?: boolean;
+  /** Draw the coded Dynamic Island. Turn off when the screen is a full
+   *  screenshot that already includes its own status bar. */
+  island?: boolean;
 }) {
   return (
     <div
@@ -48,19 +52,21 @@ export default function IPhone({
           style={{ borderRadius: "12.7cqw" }}
         >
           {/* Dynamic Island */}
-          <div
-            className="absolute left-1/2 z-30 -translate-x-1/2 rounded-full bg-black"
-            style={{ width: "30cqw", height: "8.5cqw", top: "3.6cqw" }}
-          >
+          {island && (
             <div
-              className="absolute right-[18%] top-1/2 -translate-y-1/2 rounded-full"
-              style={{
-                width: "2cqw",
-                height: "2cqw",
-                background: "radial-gradient(circle,#2a3550,#0a0c10)",
-              }}
-            />
-          </div>
+              className="absolute left-1/2 z-30 -translate-x-1/2 rounded-full bg-black"
+              style={{ width: "30cqw", height: "8.5cqw", top: "3.6cqw" }}
+            >
+              <div
+                className="absolute right-[18%] top-1/2 -translate-y-1/2 rounded-full"
+                style={{
+                  width: "2cqw",
+                  height: "2cqw",
+                  background: "radial-gradient(circle,#2a3550,#0a0c10)",
+                }}
+              />
+            </div>
+          )}
           {children}
         </div>
       </div>

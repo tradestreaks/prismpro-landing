@@ -3,30 +3,28 @@
 import { motion } from "framer-motion";
 import IPhone from "../device/IPhone";
 import { Reveal } from "../ui/Reveal";
-import {
-  CompareScreen,
-  ComparingShot,
-  VerdictShot,
-} from "../device/screens";
 
 const steps = [
   {
     n: "1",
     title: "Ask once",
     body: "Pick models, type once, send.",
-    Screen: CompareScreen,
+    shot: "/shots/home.png",
+    alt: "Prism home — pick models and ask once",
   },
   {
     n: "2",
     title: "Prism compares",
     body: "Four models answer in parallel, blind.",
-    Screen: ComparingShot,
+    shot: "/shots/comparing.png",
+    alt: "Prism comparing four AI models in parallel",
   },
   {
     n: "3",
     title: "Get the verdict",
     body: "One answer, scored and sourced.",
-    Screen: VerdictShot,
+    shot: "/shots/verdict-full.png",
+    alt: "Prism's verdict — each agent scored, all four responses sourced",
     glow: true,
   },
 ];
@@ -56,8 +54,18 @@ export default function HowItWorks() {
               }}
               className="flex flex-col items-center text-center"
             >
-              <IPhone glow={s.glow} className="w-[clamp(210px,62vw,236px)]">
-                <s.Screen />
+              <IPhone
+                glow={s.glow}
+                island={false}
+                className="w-[clamp(210px,62vw,236px)]"
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={s.shot}
+                  alt={s.alt}
+                  className="absolute inset-0 h-full w-full object-cover object-top"
+                  loading="lazy"
+                />
               </IPhone>
 
               <div className="mt-7 flex items-center gap-2.5">
@@ -76,7 +84,7 @@ export default function HowItWorks() {
         </div>
 
         <p className="mt-12 text-center text-[12px] text-ink-muted">
-          Screens 2–3 are real captures from the Prism app.
+          Real screens from the Prism app.
         </p>
       </div>
     </section>

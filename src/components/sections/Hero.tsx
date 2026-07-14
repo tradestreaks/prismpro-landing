@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import IPhone from "../device/IPhone";
-import { VerdictShot } from "../device/screens";
 import { SpectrumDots } from "../device/screen-parts";
 import WaitlistForm from "../ui/WaitlistForm";
 
@@ -115,8 +114,13 @@ export default function Hero() {
             style={{ perspective: 1400 }}
           >
             <div className="animate-float-slow">
-              <IPhone className="w-[clamp(236px,68vw,294px)]">
-                <VerdictShot />
+              <IPhone island={false} className="w-[clamp(236px,68vw,294px)]">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/shots/verdict.png"
+                  alt="Prism's synthesized verdict comparing GPT, Claude, Gemini and Perplexity"
+                  className="absolute inset-0 h-full w-full object-cover object-top"
+                />
               </IPhone>
             </div>
 
