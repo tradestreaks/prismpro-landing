@@ -117,7 +117,7 @@ export default function Hero() {
               <IPhone island={false} className="w-[clamp(236px,68vw,294px)]">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src="/shots/verdict.png"
+                  src="/shots/verdict-full.png"
                   alt="Prism's synthesized verdict comparing GPT, Claude, Gemini and Perplexity"
                   className="absolute inset-0 h-full w-full object-cover object-top"
                 />

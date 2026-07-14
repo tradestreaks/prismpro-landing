@@ -23,7 +23,7 @@ const steps = [
     n: "3",
     title: "Get the verdict",
     body: "One answer, scored and sourced.",
-    shot: "/shots/verdict-full.png",
+    shot: "/shots/verdict.png",
     alt: "Prism's verdict — each agent scored, all four responses sourced",
     glow: true,
   },
