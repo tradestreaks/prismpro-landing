@@ -1,46 +1,54 @@
 import { NextResponse } from "next/server";
 import { promises as fs } from "fs";
 import path from "path";
+import { Redis } from "@upstash/redis";
 
 /**
- * Waitlist capture — backend-ready stub.
+ * Waitlist capture.
  *
- * Validates the email and records the signup. For local/dev it appends to
- * `.data/waitlist.jsonl` (gitignored). To wire a real provider, replace the
- * `persist()` body with your integration — see the TODOs below. The client
- * (`WaitlistForm`) already expects `{ ok, message }` / `{ error }`.
+ * Persists signups to Upstash Redis (a.k.a. Vercel KV) when its env vars are
+ * present, otherwise falls back to a local JSONL file / log so the form always
+ * works. Emails are deduped in a Redis SET, and each signup's metadata is kept
+ * in a HASH keyed by email.
+ *
+ * Provision: Vercel → Storage → Upstash Redis (connect to this project). That
+ * injects KV_REST_API_URL/KV_REST_API_TOKEN (or UPSTASH_REDIS_REST_URL/TOKEN);
+ * both namings are supported below. No code changes needed after provisioning.
  */
 
 export const runtime = "nodejs";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const SET_KEY = "waitlist:emails";
 
 type Payload = { email?: string; source?: string };
+
+function getRedis(): Redis | null {
+  const url =
+    process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL;
+  const token =
+    process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN;
+  if (!url || !token) return null;
+  return new Redis({ url, token });
+}
 
 async function persist(entry: {
   email: string;
   source: string;
   ts: string;
   ua: string | null;
-}) {
-  // ── TODO: swap this local capture for your production destination ──
-  //
-  // Resend audience:
-  //   await resend.contacts.create({ email: entry.email, audienceId: process.env.RESEND_AUDIENCE_ID! });
-  //
-  // Airtable:
-  //   await fetch(`https://api.airtable.com/v0/${BASE}/Waitlist`, {
-  //     method: "POST",
-  //     headers: { Authorization: `Bearer ${process.env.AIRTABLE_TOKEN}`, "Content-Type": "application/json" },
-  //     body: JSON.stringify({ fields: { Email: entry.email, Source: entry.source } }),
-  //   });
-  //
-  // Supabase / Postgres:
-  //   await db.from("waitlist").insert({ email: entry.email, source: entry.source });
-  //
-  // ConvertKit, Loops, Mailchimp, etc. all fit here too.
-  //
-  // Default: append to a local JSONL file so the form works out of the box.
+}): Promise<{ isNew: boolean }> {
+  const redis = getRedis();
+
+  if (redis) {
+    const added = await redis.sadd(SET_KEY, entry.email); // 1 if new, 0 if dup
+    if (added) {
+      await redis.hset(`waitlist:${entry.email}`, entry);
+    }
+    return { isNew: added === 1 };
+  }
+
+  // Fallback: local file in dev; log on read-only serverless filesystems.
   try {
     const dir = path.join(process.cwd(), ".data");
     await fs.mkdir(dir, { recursive: true });
@@ -50,10 +58,9 @@ async function persist(entry: {
       "utf8"
     );
   } catch {
-    // On read-only/serverless filesystems this will fail — that's expected.
-    // The signup is still acknowledged; replace persist() before production.
     console.info("[waitlist] signup:", entry.email, `(${entry.source})`);
   }
+  return { isNew: true };
 }
 
 export async function POST(req: Request) {
@@ -74,19 +81,47 @@ export async function POST(req: Request) {
     );
   }
 
-  await persist({
-    email,
-    source,
-    ts: new Date().toISOString(),
-    ua: req.headers.get("user-agent"),
-  });
-
-  return NextResponse.json({
-    ok: true,
-    message: "You're on the waitlist.",
-  });
+  try {
+    const { isNew } = await persist({
+      email,
+      source,
+      ts: new Date().toISOString(),
+      ua: req.headers.get("user-agent"),
+    });
+    return NextResponse.json({
+      ok: true,
+      message: isNew ? "You're on the waitlist." : "You're already on the list.",
+    });
+  } catch (err) {
+    console.error("[waitlist] persist failed:", err);
+    return NextResponse.json(
+      { error: "Something went wrong. Please try again." },
+      { status: 500 }
+    );
+  }
 }
 
-export function GET() {
-  return NextResponse.json({ ok: true, service: "prismpro-waitlist" });
+/**
+ * GET  /api/waitlist            → health + count
+ * GET  /api/waitlist?token=…&list=1 → full list (requires WAITLIST_ADMIN_TOKEN)
+ */
+export async function GET(req: Request) {
+  const redis = getRedis();
+  const url = new URL(req.url);
+  const token = url.searchParams.get("token");
+  const wantList = url.searchParams.get("list");
+
+  if (!redis) {
+    return NextResponse.json({ ok: true, service: "prismpro-waitlist", store: "none" });
+  }
+
+  const count = await redis.scard(SET_KEY);
+
+  const adminToken = process.env.WAITLIST_ADMIN_TOKEN;
+  if (wantList && adminToken && token === adminToken) {
+    const emails = await redis.smembers(SET_KEY);
+    return NextResponse.json({ ok: true, count, emails });
+  }
+
+  return NextResponse.json({ ok: true, service: "prismpro-waitlist", store: "redis", count });
 }
