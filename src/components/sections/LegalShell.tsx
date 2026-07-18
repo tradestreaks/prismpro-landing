@@ -9,7 +9,7 @@ export default function LegalShell({
   children,
 }: {
   title: string;
-  updated: string;
+  updated?: string;
   children: React.ReactNode;
 }) {
   return (
@@ -27,7 +27,11 @@ export default function LegalShell({
         <h1 className="text-[38px] font-semibold tracking-tighter text-ink">
           {title}
         </h1>
-        <p className="mt-2 text-[14px] text-ink-muted">Last updated {updated}</p>
+        {updated && (
+          <p className="mt-2 text-[14px] text-ink-muted">
+            Last updated {updated}
+          </p>
+        )}
         <div className="prose-prism mt-10 space-y-6">{children}</div>
       </main>
       <Footer />

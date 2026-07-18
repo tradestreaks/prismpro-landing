@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function TermsPage() {
   return (
-    <LegalShell title="Terms of Use" updated="July 12, 2026">
+    <LegalShell title="Terms of Use" updated="July 18, 2026">
       <p>
         These interim terms cover the Prism Pro pre-launch site and waitlist.
         Prism Pro is operated by <strong>Tradestreaks LLC</strong>. Full product
@@ -38,7 +38,7 @@ export default function TermsPage() {
       <h2>Contact</h2>
       <p>
         Questions about these terms? Reach us at{" "}
-        <a href="mailto:hello@prismpro.ai">hello@prismpro.ai</a>.
+        <a href="mailto:support@tradestreaks.com">support@tradestreaks.com</a>.
       </p>
     </LegalShell>
   );

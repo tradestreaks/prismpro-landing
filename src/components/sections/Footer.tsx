@@ -14,6 +14,7 @@ const cols = [
   {
     h: "Company",
     links: [
+      { label: "About", href: "/about" },
       { label: "Join the waitlist", href: "#join" },
       { label: "Support", href: site.social.support },
       { label: "GitHub", href: site.social.github },

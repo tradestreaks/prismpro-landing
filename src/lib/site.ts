@@ -11,8 +11,8 @@ export const site = {
   social: {
     x: "https://x.com/prismproai",
     github: "https://github.com/tradestreaks/Prism",
-    contact: "mailto:hello@prismpro.ai",
-    support: "mailto:support@prismpro.ai",
+    contact: "mailto:support@tradestreaks.com",
+    support: "mailto:support@tradestreaks.com",
   },
 };
 

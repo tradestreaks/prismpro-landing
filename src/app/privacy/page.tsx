@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function PrivacyPage() {
   return (
-    <LegalShell title="Privacy Policy" updated="July 12, 2026">
+    <LegalShell title="Privacy Policy" updated="July 18, 2026">
       <p>
         Prism Pro is operated by <strong>Tradestreaks LLC</strong>. Privacy is a
         first principle here. This summary explains what we collect for the
@@ -35,16 +35,33 @@ export default function PrivacyPage() {
 
       <h2>In the app</h2>
       <p>
-        When Prism launches, your comparison and chat history lives on your
-        device by default. AI runs server-side using Prism&apos;s own provider
-        credentials, so you never hand us your API keys, and your prompts are
-        used only to produce your results.
+        Your comparison and chat history lives on your device by default — we
+        do not store it on our servers.
       </p>
+      <ul>
+        <li>
+          <strong>Account.</strong> If you sign in with Apple, we receive an
+          account identifier and, only if you choose to share it, your email
+          address. Guest mode requires no account.
+        </li>
+        <li>
+          <strong>Prompts.</strong> AI runs server-side using Prism&apos;s own
+          provider credentials, so you never hand us your API keys. Your
+          prompts and attachments are sent to the AI providers solely to
+          generate your results and are not used to train Prism&apos;s systems.
+        </li>
+        <li>
+          <strong>Payments.</strong> Subscriptions are billed by Apple through
+          your App Store account. We never see your payment details.
+        </li>
+      </ul>
 
       <h2>Your choices</h2>
       <p>
-        You can ask us to remove your email from the waitlist at any time by
-        contacting <a href="mailto:hello@prismpro.ai">hello@prismpro.ai</a>.
+        You can clear your history on your device at any time from Settings.
+        To remove your email from the waitlist or delete your account data,
+        contact{" "}
+        <a href="mailto:support@tradestreaks.com">support@tradestreaks.com</a>.
       </p>
     </LegalShell>
   );
