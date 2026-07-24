@@ -1,5 +1,10 @@
 # Prism — Launch Landing Page
 
+> **Deployment mirror.** The source of truth is
+> [`Tradestreaks-LLC/Prism/apps/landing`](https://github.com/Tradestreaks-LLC/Prism/tree/main/apps/landing).
+> Make product changes in the monorepo and publish them here for Vercel until
+> the production project is connected directly to the private monorepo.
+
 A premium, high-converting pre-launch page for **prismpro.ai** (product name
 **Prism**, by **Tradestreaks LLC**). Dark-mode-first, built to feel like the app
 itself — calm, editorial, synthesis-first.
