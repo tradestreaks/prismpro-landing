@@ -96,7 +96,8 @@ export default function Footer() {
 
         <div className="mt-14 flex flex-col items-center justify-between gap-4 border-t border-hairline pt-8 sm:flex-row">
           <p className="text-[13px] text-ink-muted">
-            © {new Date().getFullYear()} {site.company} · Prism
+            © {new Date().getFullYear()} {site.company}. All rights reserved.
+            {" "}Prism™.
           </p>
           <p className="text-[13px] text-ink-muted">prismpro.ai</p>
         </div>

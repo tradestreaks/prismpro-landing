@@ -4,6 +4,15 @@ A premium, high-converting pre-launch page for **prismpro.ai** (product name
 **Prism**, by **Tradestreaks LLC**). Dark-mode-first, built to feel like the app
 itself — calm, editorial, synthesis-first.
 
+Copyright © 2026 Tradestreaks LLC. All rights reserved. Prism™ is a trademark
+of Tradestreaks LLC.
+
+This is proprietary software, not an open-source project. The repository is
+publicly viewable because the landing page deploys through Vercel's free Hobby
+plan. Public availability does not grant permission to copy, modify,
+distribute, or reuse its source, designs, copy, or brand assets. See `LICENSE`
+and `CONTRIBUTING.md`.
+
 Aesthetic blend of Apple / OpenAI / Anthropic / Linear / Arc / Vercel, tuned to
 the **Prism app theme**: the ensō + coral-prism mark, the refraction spectrum
 (coral → tan → lavender → sage → slate), warm dark surfaces, and editorial-serif

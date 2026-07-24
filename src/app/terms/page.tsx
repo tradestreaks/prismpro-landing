@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function TermsPage() {
   return (
-    <LegalShell title="Terms of Use" updated="July 18, 2026">
+    <LegalShell title="Terms of Use" updated="July 23, 2026">
       <p>
         Prism Pro (&quot;Prism&quot;) is operated by{" "}
         <strong>Tradestreaks LLC</strong>. By using the Prism app or this
@@ -71,6 +71,23 @@ export default function TermsPage() {
         <li>Submit only an email address you control to the waitlist.</li>
         <li>Do not attempt to disrupt or abuse the site or its forms.</li>
       </ul>
+
+      <h2>Intellectual property</h2>
+      <p>
+        Prism, including its original software, visual design, branding, text,
+        and service content, is owned by Tradestreaks LLC or its licensors and
+        is protected by applicable intellectual-property laws. Prism™ and the
+        Prism logo are trademarks of Tradestreaks LLC. Other product and
+        company names belong to their respective owners.
+      </p>
+      <p>
+        These terms allow you to use Prism and this website for their intended
+        purposes. They do not grant permission to copy, distribute, sell,
+        sublicense, or create derivative works from Prism or to use Prism&apos;s
+        branding. To the extent permitted by applicable law, you may not
+        reverse engineer, decompile, or attempt to extract non-public source
+        code, confidential methods, or security controls from the service.
+      </p>
 
       <h2>Disclaimer</h2>
       <p>
